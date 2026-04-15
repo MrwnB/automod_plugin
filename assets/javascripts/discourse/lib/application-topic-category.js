@@ -25,7 +25,6 @@ export function isSupportedApplicationCategory(topic) {
 
   return (
     (!parentName && categoryName === APPLICATIONS_CATEGORY_NAME) ||
-    (parentName === APPLICATIONS_CATEGORY_NAME &&
-      SUPPORTED_SUBCATEGORIES.has(categoryName))
+    (parentName === APPLICATIONS_CATEGORY_NAME && SUPPORTED_SUBCATEGORIES.has(categoryName))
   );
 }

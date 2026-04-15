@@ -292,7 +292,10 @@ module ::AutomodPlugin
     end
 
     def revise_title!(new_title)
-      revisor = PostRevisor.new(@topic.first_post, @topic)
+      first_post = @topic.first_post || @topic.ordered_posts.first
+      raise Discourse::InvalidParameters.new(:topic) if first_post.blank?
+
+      revisor = PostRevisor.new(first_post)
       result = revisor.revise!(@user, { title: new_title })
 
       raise Discourse::InvalidParameters.new(:title) if !result

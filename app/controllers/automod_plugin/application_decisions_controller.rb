@@ -15,16 +15,17 @@ module ::AutomodPlugin
       service = ApplicationTopicDecisionService.new(topic:, user: current_user)
 
       if !service.supported?
-        return(
-          render json: {
-                   errors: ["This topic is not in a supported application category."],
-                 },
-                 status: :unprocessable_entity
-        )
+        return render(
+                 json: { errors: ["This topic is not in a supported application category."] },
+                 status: :unprocessable_entity,
+               )
       end
 
       if topic.closed?
-        return render json: { errors: ["This topic is already locked."] }, status: :unprocessable_entity
+        return render(
+                 json: { errors: ["This topic is already locked."] },
+                 status: :unprocessable_entity,
+               )
       end
 
       result = service.call(params[:decision])
