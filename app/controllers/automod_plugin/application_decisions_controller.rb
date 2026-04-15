@@ -35,7 +35,9 @@ module ::AutomodPlugin
     end
 
     def render_unsupported_category
-      render json: { errors: ["This topic is not in a supported application category."] },
+      render json: {
+               errors: ["This topic is not in a supported application category."],
+             },
              status: :unprocessable_entity
     end
   end

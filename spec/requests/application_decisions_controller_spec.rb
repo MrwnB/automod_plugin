@@ -106,11 +106,8 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
 
     it "rejects unsupported categories" do
       unsupported_category = Fabricate(:category, name: "General")
-      topic = Fabricate(
-        :topic_with_op,
-        title: "General discussion topic",
-        category: unsupported_category,
-      )
+      topic =
+        Fabricate(:topic_with_op, title: "General discussion topic", category: unsupported_category)
 
       sign_in(admin)
 
@@ -123,11 +120,12 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
     end
 
     it "rejects non-staff users" do
-      topic = Fabricate(
-        :topic_with_op,
-        title: "My application for review",
-        category: applications_category,
-      )
+      topic =
+        Fabricate(
+          :topic_with_op,
+          title: "My application for review",
+          category: applications_category,
+        )
 
       sign_in(member)
 
@@ -140,12 +138,13 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
     end
 
     it "rejects topics that are already closed" do
-      topic = Fabricate(
-        :topic_with_op,
-        title: "Already reviewed application",
-        category: applications_category,
-        closed: true,
-      )
+      topic =
+        Fabricate(
+          :topic_with_op,
+          title: "Already reviewed application",
+          category: applications_category,
+          closed: true,
+        )
 
       sign_in(admin)
 

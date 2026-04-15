@@ -10,7 +10,9 @@ const SUPPORTED_SUBCATEGORIES = new Set([
 ]);
 
 function normalizeName(value) {
-  return String(value || "").trim().toLowerCase();
+  return String(value || "")
+    .trim()
+    .toLowerCase();
 }
 
 export function isSupportedApplicationCategory(topic) {
@@ -25,6 +27,7 @@ export function isSupportedApplicationCategory(topic) {
 
   return (
     (!parentName && categoryName === APPLICATIONS_CATEGORY_NAME) ||
-    (parentName === APPLICATIONS_CATEGORY_NAME && SUPPORTED_SUBCATEGORIES.has(categoryName))
+    (parentName === APPLICATIONS_CATEGORY_NAME &&
+      SUPPORTED_SUBCATEGORIES.has(categoryName))
   );
 }

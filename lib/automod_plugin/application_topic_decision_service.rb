@@ -13,10 +13,7 @@ module ::AutomodPlugin
       "become a master guardian" => :master_guardian,
       "become a grand guardian" => :grand_guardian,
     }.freeze
-    STATUS_PREFIXES = {
-      accept: "[Accepted]",
-      decline: "[Declined]",
-    }.freeze
+    STATUS_PREFIXES = { accept: "[Accepted]", decline: "[Declined]" }.freeze
     STATUS_PREFIX_REGEX = /\A\[(accepted|declined)\]\s*/i
 
     BASE_APPLICATION_ACCEPTED = <<~TEXT.rstrip
@@ -237,10 +234,7 @@ module ::AutomodPlugin
         @topic.update_status("closed", true, @user)
       end
 
-      {
-        topic_title: @topic.reload.title,
-        closed: @topic.closed?,
-      }
+      { topic_title: @topic.reload.title, closed: @topic.closed? }
     end
 
     private
@@ -286,9 +280,7 @@ module ::AutomodPlugin
     def prefixed_title(decision_key)
       title_without_status = @topic.title.sub(STATUS_PREFIX_REGEX, "").strip
 
-      [STATUS_PREFIXES.fetch(decision_key), title_without_status]
-        .reject(&:blank?)
-        .join(" ")
+      [STATUS_PREFIXES.fetch(decision_key), title_without_status].reject(&:blank?).join(" ")
     end
 
     def revise_title!(new_title)
