@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-MyPluginModule::Engine.routes.draw do
-  get "/examples" => "examples#index"
-  # define routes here
+AutomodPlugin::Engine.routes.draw do
+  post "/application-topics/:topic_id/:decision" => "application_decisions#create"
 end
 
-Discourse::Application.routes.draw { mount ::MyPluginModule::Engine, at: "my-plugin" }
+Discourse::Application.routes.draw { mount ::AutomodPlugin::Engine, at: "/automod" }

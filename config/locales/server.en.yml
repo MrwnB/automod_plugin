@@ -1,1 +1,3 @@
 en:
+  site_settings:
+    automod_plugin_enabled: "Enable staff accept and decline actions for supported application topics."

@@ -1,5 +1,18 @@
-# **Plugin Name** Plugin
+# Discourse Automod Plugin
 
-**Plugin Summary**
+Adds staff-only `Accept` and `Decline` actions to the topic admin menu for supported application categories.
 
-For more information, please see: **url to meta topic**
+When a staff user clicks either action, the plugin:
+
+- prepends or replaces a topic status prefix with `[Accepted]` or `[Declined]`
+- posts the matching canned reply for the topic's application category
+- locks the topic
+
+Supported category scope:
+
+- `Applications`
+- `Applications > Graduations`
+- `Applications > Apply For Honoured`
+- `Applications > Apply For Heroic`
+- `Applications > Become a Master Guardian`
+- `Applications > Become a Grand Guardian`

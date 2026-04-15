@@ -1,21 +1,20 @@
 # frozen_string_literal: true
 
-# name: discourse-plugin-name
-# about: TODO
-# meta_topic_id: TODO
-# version: 0.0.1
-# authors: Discourse
-# url: TODO
+# name: automod_plugin
+# about: Staff accept and decline actions for application topics
+# version: 0.1
+# authors: OpenAI
+# url: https://www.wildernessguardians.com
 # required_version: 2.7.0
 
-enabled_site_setting :plugin_name_enabled
+enabled_site_setting :automod_plugin_enabled
 
-module ::MyPluginModule
-  PLUGIN_NAME = "discourse-plugin-name"
+module ::AutomodPlugin
+  PLUGIN_NAME = "automod_plugin"
 end
 
-require_relative "lib/my_plugin_module/engine"
+require_relative "lib/automod_plugin/engine"
 
 after_initialize do
-  # Code which should run after Rails has finished booting
+  # Plugin boot is handled by the engine, controller, and frontend initializers.
 end

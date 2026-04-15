@@ -3,7 +3,14 @@ en:
     admin:
       site_settings:
         categories:
-          TODO_plugin_name: "Plugin Name"
+          automod_plugin: "Application Moderation"
   js:
-    discourse_plugin_name:
-      placeholder: placeholder
+    automod_plugin:
+      accept:
+        label: "Accept"
+        success: "Application accepted and locked."
+      decline:
+        label: "Decline"
+        success: "Application declined and locked."
+      errors:
+        generic: "We couldn't update this application topic."
