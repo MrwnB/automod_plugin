@@ -26,75 +26,83 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
     post "/automod/application-topics/#{topic.id}/#{decision}.json"
   end
 
-  shared_examples "applies a decision and locks the topic" do |
-    category_name:,
-    decision:,
-    initial_title:,
-    expected_title:,
-    expected_message:
-  |
-    it "posts the #{decision} reply for #{category_name} topics" do
-      topic = Fabricate(:topic_with_op, title: initial_title, category: public_send(category_name))
-
-      sign_in(admin)
-
-      perform_decision(topic, decision)
-
-      expect(response.status).to eq(200)
-      expect(topic.reload.title).to eq(expected_title)
-      expect(topic.closed?).to eq(true)
-      expect(topic.posts.order(:post_number).last.raw).to eq(expected_message)
-    end
+  def decision_reply_for(topic)
+    topic
+      .posts
+      .where(post_type: Post.types[:regular])
+      .where("post_number > 1")
+      .order(:post_number)
+      .last
   end
 
   describe "POST /automod/application-topics/:topic_id/:decision" do
-    include_examples "applies a decision and locks the topic",
-                     category_name: :applications_category,
-                     decision: :accept,
-                     initial_title: "My application for review",
-                     expected_title: "[Accepted] My application for review",
-                     expected_message:
-                       AutomodPlugin::ApplicationTopicDecisionService::BASE_APPLICATION_ACCEPTED
+    [
+      {
+        category_name: :applications_category,
+        decision: :accept,
+        initial_title: "My application for review",
+        expected_title: "[Accepted] My application for review",
+        expected_message: AutomodPlugin::ApplicationTopicDecisionService::BASE_APPLICATION_ACCEPTED,
+      },
+      {
+        category_name: :graduations_category,
+        decision: :decline,
+        initial_title: "[Accepted] Ready for graduation review",
+        expected_title: "[Declined] Ready for graduation review",
+        expected_message: AutomodPlugin::ApplicationTopicDecisionService::GRADUATION_DECLINED,
+      },
+      {
+        category_name: :honoured_category,
+        decision: :accept,
+        initial_title: "Honoured Guardian application",
+        expected_title: "[Accepted] Honoured Guardian application",
+        expected_message:
+          AutomodPlugin::ApplicationTopicDecisionService::HONOURED_GUARDIAN_ACCEPTED,
+      },
+      {
+        category_name: :heroic_category,
+        decision: :decline,
+        initial_title: "Heroic Guardian application",
+        expected_title: "[Declined] Heroic Guardian application",
+        expected_message: AutomodPlugin::ApplicationTopicDecisionService::HEROIC_GUARDIAN_DECLINED,
+      },
+      {
+        category_name: :master_category,
+        decision: :accept,
+        initial_title: "Master Guardian application",
+        expected_title: "[Accepted] Master Guardian application",
+        expected_message: AutomodPlugin::ApplicationTopicDecisionService::MASTER_GUARDIAN_ACCEPTED,
+      },
+      {
+        category_name: :grand_category,
+        decision: :decline,
+        initial_title: "Grand Guardian application",
+        expected_title: "[Declined] Grand Guardian application",
+        expected_message: AutomodPlugin::ApplicationTopicDecisionService::GRAND_GUARDIAN_DECLINED,
+      },
+    ].each do |example|
+      it "posts the #{example[:decision]} reply for #{example[:category_name]} topics" do
+        topic =
+          Fabricate(
+            :topic_with_op,
+            title: example[:initial_title],
+            category: public_send(example[:category_name]),
+          )
 
-    include_examples "applies a decision and locks the topic",
-                     category_name: :graduations_category,
-                     decision: :decline,
-                     initial_title: "[Accepted] Ready for graduation review",
-                     expected_title: "[Declined] Ready for graduation review",
-                     expected_message:
-                       AutomodPlugin::ApplicationTopicDecisionService::GRADUATION_DECLINED
+        sign_in(admin)
 
-    include_examples "applies a decision and locks the topic",
-                     category_name: :honoured_category,
-                     decision: :accept,
-                     initial_title: "Honoured Guardian application",
-                     expected_title: "[Accepted] Honoured Guardian application",
-                     expected_message:
-                       AutomodPlugin::ApplicationTopicDecisionService::HONOURED_GUARDIAN_ACCEPTED
+        perform_decision(topic, example[:decision])
 
-    include_examples "applies a decision and locks the topic",
-                     category_name: :heroic_category,
-                     decision: :decline,
-                     initial_title: "Heroic Guardian application",
-                     expected_title: "[Declined] Heroic Guardian application",
-                     expected_message:
-                       AutomodPlugin::ApplicationTopicDecisionService::HEROIC_GUARDIAN_DECLINED
+        topic.reload
+        reply = decision_reply_for(topic)
 
-    include_examples "applies a decision and locks the topic",
-                     category_name: :master_category,
-                     decision: :accept,
-                     initial_title: "Master Guardian application",
-                     expected_title: "[Accepted] Master Guardian application",
-                     expected_message:
-                       AutomodPlugin::ApplicationTopicDecisionService::MASTER_GUARDIAN_ACCEPTED
-
-    include_examples "applies a decision and locks the topic",
-                     category_name: :grand_category,
-                     decision: :decline,
-                     initial_title: "Grand Guardian application",
-                     expected_title: "[Declined] Grand Guardian application",
-                     expected_message:
-                       AutomodPlugin::ApplicationTopicDecisionService::GRAND_GUARDIAN_DECLINED
+        expect(response.status).to eq(200)
+        expect(topic.title).to eq(example[:expected_title])
+        expect(topic.closed?).to eq(true)
+        expect(reply).to be_present
+        expect(reply.raw).to eq(example[:expected_message])
+      end
+    end
 
     it "rejects unsupported categories" do
       unsupported_category = Fabricate(:category, name: "General")

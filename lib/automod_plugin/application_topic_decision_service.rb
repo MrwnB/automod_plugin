@@ -225,8 +225,8 @@ module ::AutomodPlugin
     def call(decision)
       decision_key = normalize_decision(decision)
       raise Discourse::InvalidParameters.new(:decision) if decision_key.blank?
-      raise Discourse::InvalidAccess.new if !@user&.staff?
-      raise Discourse::InvalidAccess.new if !supported?
+      raise Discourse::InvalidAccess.new unless @user&.staff?
+      raise Discourse::InvalidAccess.new unless supported?
       raise TopicAlreadyClosed if @topic.closed?
 
       @topic.with_lock do
@@ -298,7 +298,7 @@ module ::AutomodPlugin
       revisor = PostRevisor.new(first_post)
       result = revisor.revise!(@user, { title: new_title })
 
-      raise Discourse::InvalidParameters.new(:title) if !result
+      raise Discourse::InvalidParameters.new(:title) unless result
     end
   end
 end
