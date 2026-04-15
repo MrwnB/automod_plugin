@@ -1,7 +1,7 @@
 import { ajax } from "discourse/lib/ajax";
 import { apiInitializer } from "discourse/lib/api";
-import { isSupportedApplicationCategory } from "discourse/lib/application-topic-category";
 import { i18n } from "discourse-i18n";
+import { isSupportedApplicationCategory } from "../lib/application-topic-category";
 
 async function applyDecision(api, topic, decision) {
   const toasts = api.container.lookup("service:toasts");
