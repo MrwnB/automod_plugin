@@ -229,11 +229,7 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
 
     it "rejects non-staff users" do
       topic =
-        Fabricate(
-          :topic_with_op,
-          title: "My application for review",
-          category: join_us_category,
-        )
+        Fabricate(:topic_with_op, title: "My application for review", category: join_us_category)
 
       sign_in(member)
 
