@@ -11,6 +11,7 @@ When a staff user clicks either action, the plugin:
 Supported category scope:
 
 - `Applications`
+- `Join Us`
 - `Applications > Graduations`
 - `Applications > Apply For Honoured`
 - `Applications > Apply For Heroic`

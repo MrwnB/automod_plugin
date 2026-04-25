@@ -6,6 +6,11 @@ module ::AutomodPlugin
     end
 
     APPLICATIONS_CATEGORY_NAME = "applications"
+    STANDALONE_CATEGORIES = {
+      APPLICATIONS_CATEGORY_NAME => :base_application,
+      "join us" => :join_application,
+      "join-us" => :join_application,
+    }.freeze
     SUPPORTED_SUBCATEGORIES = {
       "graduations" => :graduations,
       "apply for honoured" => :honoured_guardian,
@@ -48,12 +53,48 @@ module ::AutomodPlugin
       P.P.S. Are you a Discord Nitro subscriber or have a lot of IRL money? 🤑 Consider giving us your Nitro Server Boost. See #nitro-boost on Discord for info.
     TEXT
 
+    JOIN_APPLICATION_ACCEPTED = <<~TEXT.rstrip
+      You are now an Initiate Guardian and have 3 weeks to attend 3 events, reply to at least 10 posts and graduate.
+
+
+      Here are some useful links:
+
+      - [Graduations](https://forums.wildernessguardians.com/t/how-to-graduate/58) - you have 3 weeks to post your graduation form. You can post it before you reach all the requirements and fill them in later.
+      - [Topics](https://forums.wildernessguardians.com/latest) - gives you the latest posts. Keeps you up to date.
+      - [Important Announcements](https://forums.wildernessguardians.com/c/important-announcements/35) - check frequently for major updates.
+      - [Calendar](https://forums.wildernessguardians.com/upcoming-events) - all events are here, listed in your own time zone. You can even host your own.
+      - [Discord](https://discord.gg/wg) - keep notifications on for #osrs_announcements. We'll never spam you.
+
+      New to PvM or PvP? Check out the #pvm-help and #pvp-help channels on Discord.
+      Use #pvm-help on Discord to assign yourself roles to get pings for groups.
+      Use !pvp to get pings for PK trips.
+
+
+      Important: Please do not talk about PvP events in our Clan Chat. Use Discord.
+
+
+      I and the staff are happy to answer any further questions.
+
+      Welcome to our clan!
+
+
+      P.S. Got two minutes spare? Take this optional survey to help us with our recruitment process.
+
+      P.P.S. Are you a Discord Nitro subscriber or have a lot of IRL money? 🤑 Consider giving us your Nitro Server Boost. See #nitro-boost on Discord for info.
+    TEXT
+
     BASE_APPLICATION_DECLINED = <<~TEXT.rstrip
       [center]
       Your application has been declined as you did not request your application review from an Application Manager or Leader.
 
       Feel free to apply again if you feel you can be active.
       [/center]
+    TEXT
+
+    JOIN_APPLICATION_DECLINED = <<~TEXT.rstrip
+      Your application has been declined.
+
+      See the previous post or contact an App Manager or Leader for an explanation.
     TEXT
 
     GRADUATION_ACCEPTED = <<~TEXT.rstrip
@@ -188,6 +229,10 @@ module ::AutomodPlugin
         accept: BASE_APPLICATION_ACCEPTED,
         decline: BASE_APPLICATION_DECLINED,
       },
+      join_application: {
+        accept: JOIN_APPLICATION_ACCEPTED,
+        decline: JOIN_APPLICATION_DECLINED,
+      },
       graduations: {
         accept: GRADUATION_ACCEPTED,
         decline: GRADUATION_DECLINED,
@@ -245,15 +290,27 @@ module ::AutomodPlugin
       category = @topic.category
       return @category_key = nil if category.blank?
 
-      category_name = normalize_name(category.name)
-      parent_name = normalize_name(category.parent_category&.name)
+      category_identifiers = normalized_category_identifiers(category)
+      parent_identifiers = normalized_category_identifiers(category.parent_category)
 
       @category_key =
-        if parent_name == APPLICATIONS_CATEGORY_NAME
-          SUPPORTED_SUBCATEGORIES[category_name]
-        elsif parent_name.blank? && category_name == APPLICATIONS_CATEGORY_NAME
-          :base_application
+        if parent_identifiers.include?(APPLICATIONS_CATEGORY_NAME)
+          category_key_for(category_identifiers, SUPPORTED_SUBCATEGORIES)
+        elsif parent_identifiers.blank?
+          category_key_for(category_identifiers, STANDALONE_CATEGORIES)
         end
+    end
+
+    def category_key_for(identifiers, category_keys)
+      identifiers.each do |identifier|
+        return category_keys.fetch(identifier) if category_keys.key?(identifier)
+      end
+
+      nil
+    end
+
+    def normalized_category_identifiers(category)
+      [category&.name, category&.slug].map { |value| normalize_name(value) }.reject(&:blank?)
     end
 
     def create_reply!(raw)

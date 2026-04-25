@@ -6,6 +6,7 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
   fab!(:admin)
   fab!(:member, :user)
   fab!(:applications_category) { Fabricate(:category, name: "Applications") }
+  fab!(:join_us_category) { Fabricate(:category, name: "Join Us") }
   fab!(:graduations_category) do
     Fabricate(:category, name: "Graduations", parent_category: applications_category)
   end
@@ -43,6 +44,20 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
         initial_title: "My application for review",
         expected_title: "[Accepted] My application for review",
         expected_message: AutomodPlugin::ApplicationTopicDecisionService::BASE_APPLICATION_ACCEPTED,
+      },
+      {
+        category_name: :join_us_category,
+        decision: :accept,
+        initial_title: "Example join application",
+        expected_title: "[Accepted] Example join application",
+        expected_message: AutomodPlugin::ApplicationTopicDecisionService::JOIN_APPLICATION_ACCEPTED,
+      },
+      {
+        category_name: :join_us_category,
+        decision: :decline,
+        initial_title: "Example join application",
+        expected_title: "[Declined] Example join application",
+        expected_message: AutomodPlugin::ApplicationTopicDecisionService::JOIN_APPLICATION_DECLINED,
       },
       {
         category_name: :graduations_category,
