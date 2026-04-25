@@ -3,7 +3,7 @@
 # name: automod_plugin
 # about: Staff accept and decline actions for application topics
 # version: 0.1
-# authors: OpenAI
+# authors: GoreDef
 # url: https://www.wildernessguardians.com
 # required_version: 2.7.0
 
