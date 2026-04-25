@@ -7,7 +7,6 @@ module ::AutomodPlugin
 
     APPLICATIONS_CATEGORY_NAME = "applications"
     STANDALONE_CATEGORIES = {
-      APPLICATIONS_CATEGORY_NAME => :base_application,
       "join us" => :join_application,
       "join-us" => :join_application,
     }.freeze
@@ -20,38 +19,6 @@ module ::AutomodPlugin
     }.freeze
     STATUS_PREFIXES = { accept: "[Accepted]", decline: "[Declined]" }.freeze
     STATUS_PREFIX_REGEX = /\A\[(accepted|declined)\]\s*/i
-
-    BASE_APPLICATION_ACCEPTED = <<~TEXT.rstrip
-      Congratulations, you have been accepted into our community!
-
-      You are now an Initiate Guardian and have 3 weeks to attend 3 events, reply to at least 10 posts and graduate.
-
-
-      Here are some useful links:
-
-          Graduations - you have 3 weeks to post your graduation form. You can post it before you reach all the requirements and fill them in later.
-          Unread content - gives you the latest posts. Keeps you up to date.
-          Important Announcements - check frequently for major updates.
-          Calendar - all events are here, listed in your own time zone. You can even host your own.
-          Discord - keep notifications on for #osrs_announcements. We'll never spam you.
-          Recruitment Tips - help expand our clan
-          New to PvM or PvP? Check out the #pvm-help and #pvp-help channels on Discord.
-          Use #pvm-help on Discord to assign yourself roles to get pings for groups
-          Use !pvp to get pings for PK trips.
-
-
-      Important: Please do not talk about PvP events in our Clan Chat. Use Discord.
-
-
-      I and the staff are happy to answer any further questions.
-
-      Welcome to our clan!
-
-
-      P.S. Got two minutes spare? Take this optional survey to help us with our recruitment process.
-
-      P.P.S. Are you a Discord Nitro subscriber or have a lot of IRL money? 🤑 Consider giving us your Nitro Server Boost. See #nitro-boost on Discord for info.
-    TEXT
 
     JOIN_APPLICATION_ACCEPTED = <<~TEXT.rstrip
       You are now an Initiate Guardian and have 3 weeks to attend 3 events, reply to at least 10 posts and graduate.
@@ -81,14 +48,6 @@ module ::AutomodPlugin
       P.S. Got two minutes spare? Take this optional survey to help us with our recruitment process.
 
       P.P.S. Are you a Discord Nitro subscriber or have a lot of IRL money? 🤑 Consider giving us your Nitro Server Boost. See #nitro-boost on Discord for info.
-    TEXT
-
-    BASE_APPLICATION_DECLINED = <<~TEXT.rstrip
-      [center]
-      Your application has been declined as you did not request your application review from an Application Manager or Leader.
-
-      Feel free to apply again if you feel you can be active.
-      [/center]
     TEXT
 
     JOIN_APPLICATION_DECLINED = <<~TEXT.rstrip
@@ -225,10 +184,6 @@ module ::AutomodPlugin
     TEXT
 
     DECISION_MESSAGES = {
-      base_application: {
-        accept: BASE_APPLICATION_ACCEPTED,
-        decline: BASE_APPLICATION_DECLINED,
-      },
       join_application: {
         accept: JOIN_APPLICATION_ACCEPTED,
         decline: JOIN_APPLICATION_DECLINED,

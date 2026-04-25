@@ -2,7 +2,6 @@ import Category from "discourse/models/category";
 
 const APPLICATIONS_CATEGORY_NAME = "applications";
 const STANDALONE_CATEGORIES = new Map([
-  [APPLICATIONS_CATEGORY_NAME, "base_application"],
   ["join us", "join_application"],
   ["join-us", "join_application"],
 ]);

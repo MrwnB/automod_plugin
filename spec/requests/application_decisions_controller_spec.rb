@@ -39,13 +39,6 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
   describe "POST /automod/application-topics/:topic_id/:decision" do
     [
       {
-        category_name: :applications_category,
-        decision: :accept,
-        initial_title: "My application for review",
-        expected_title: "[Accepted] My application for review",
-        expected_message: AutomodPlugin::ApplicationTopicDecisionService::BASE_APPLICATION_ACCEPTED,
-      },
-      {
         category_name: :join_us_category,
         decision: :accept,
         initial_title: "Example join application",
@@ -216,12 +209,30 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
       expect(topic.posts.count).to eq(1)
     end
 
+    it "rejects the parent applications category" do
+      topic =
+        Fabricate(
+          :topic_with_op,
+          title: "Topic in parent applications category",
+          category: applications_category,
+        )
+
+      sign_in(admin)
+
+      perform_decision(topic, :accept)
+
+      expect(response.status).to eq(422)
+      expect(topic.reload.title).to eq("Topic in parent applications category")
+      expect(topic.closed?).to eq(false)
+      expect(topic.posts.count).to eq(1)
+    end
+
     it "rejects non-staff users" do
       topic =
         Fabricate(
           :topic_with_op,
           title: "My application for review",
-          category: applications_category,
+          category: join_us_category,
         )
 
       sign_in(member)
@@ -239,7 +250,7 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
         Fabricate(
           :topic_with_op,
           title: "Already reviewed application",
-          category: applications_category,
+          category: join_us_category,
           closed: true,
         )
 
