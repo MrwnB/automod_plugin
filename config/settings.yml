@@ -3,38 +3,165 @@ automod_plugin:
     default: true
     client: true
   automod_plugin_join_us_accept_message:
-    default: ""
+    default: |-
+      You are now an Initiate Guardian and have 3 weeks to attend 3 events, reply to at least 10 posts and graduate.
+
+
+      Here are some useful links:
+
+      - [Graduations](https://forums.wildernessguardians.com/t/how-to-graduate/58) - you have 3 weeks to post your graduation form. You can post it before you reach all the requirements and fill them in later.
+      - [Topics](https://forums.wildernessguardians.com/latest) - gives you the latest posts. Keeps you up to date.
+      - [Important Announcements](https://forums.wildernessguardians.com/c/important-announcements/35) - check frequently for major updates.
+      - [Calendar](https://forums.wildernessguardians.com/upcoming-events) - all events are here, listed in your own time zone. You can even host your own.
+      - [Discord](https://discord.gg/wg) - keep notifications on for #osrs_announcements. We'll never spam you.
+
+      New to PvM or PvP? Check out the #pvm-help and #pvp-help channels on Discord.
+      Use #pvm-help on Discord to assign yourself roles to get pings for groups.
+      Use !pvp to get pings for PK trips.
+
+
+      Important: Please do not talk about PvP events in our Clan Chat. Use Discord.
+
+
+      I and the staff are happy to answer any further questions.
+
+      Welcome to our clan!
+
+
+      P.S. Got two minutes spare? Take this optional survey to help us with our recruitment process.
+
+      P.P.S. Are you a Discord Nitro subscriber or have a lot of IRL money? 🤑 Consider giving us your Nitro Server Boost. See #nitro-boost on Discord for info.
     textarea: true
   automod_plugin_join_us_decline_message:
-    default: ""
+    default: |-
+      Your application has been declined.
+
+      See the previous post or contact an App Manager or Leader for an explanation.
     textarea: true
   automod_plugin_graduations_accept_message:
-    default: ""
+    default: |-
+      Congratulations! Your graduation has been accepted.
+
+
+      We now suggest that you work towards the next rank, Honoured Guardian.
+
+      This is a more prestigious rank and gives you benefits such as the ability to apply for vacant staff positions and the ability to work towards the bronze and silver star ranks in CC.
+
+      Achieving Honoured Guardian also allows you the option to apply to join our dedicated elite PvP/PvM unit, the Master Guardians/Grand Guardians
+
+      Find out how to do that by viewing this board. You can post your application before you reach all the requirements and edit them in later.
+
+
+      We hope you will continue the level of activity, dedication and commitment you have already displayed for the remainder of your career with us.
+
+
+      All the best!
     textarea: true
   automod_plugin_graduations_decline_message:
-    default: ""
+    default: |-
+      This graduation has been declined.
+
+      A reason may or may not be provided above.
+
+      The applicant usually cannot see a declined graduation so we don't always post a reason.
     textarea: true
   automod_plugin_honoured_guardian_accept_message:
-    default: ""
+    default: |-
+      Congratulations! Your application for Honoured Guardian has been accepted.
+
+
+      You have reached a prestigious rank within WG and we thank you for all your effort and dedication so far.
+
+
+      You can now see this forum where we occasionally seek new staff members.
+
+
+      Don't stop there though, there are still three more ranks that normal members can achieve: Heroic, High then Elite.
+
+      These are not awarded by applying but chosen by staff every so often.
+
+
+      Thank you for your continued passion and commitment.
+
+      All the best!
     textarea: true
   automod_plugin_honoured_guardian_decline_message:
-    default: ""
+    default: |-
+      This application for Honoured has been declined.
+
+      A reason may or may not be provided above.
+
+      The applicant usually cannot see a declined application so we don't always post a reason.
     textarea: true
   automod_plugin_heroic_guardian_accept_message:
-    default: ""
+    default: |-
+      Congratulations! Your application for Heroic Guardian has been accepted.
+
+
+      You have reached a prestigious rank within WG and we thank you for all your effort and dedication so far.
+
+
+      You can now see this forum where we occasionally seek new staff members.
+
+
+      Don't stop there though, there are still two more ranks that normal members can achieve: High then Elite.
+
+      These are not awarded by applying but chosen by staff every so often.
+
+
+      Thank you for your continued passion and commitment.
+
+      All the best!
     textarea: true
   automod_plugin_heroic_guardian_decline_message:
-    default: ""
+    default: |-
+      This application for Heroic Guardian has been declined.
+
+      A reason may or may not be provided above.
+
+      The applicant usually cannot see a declined application so we don't always post a reason.
     textarea: true
   automod_plugin_master_guardian_accept_message:
-    default: ""
+    default: |-
+      Congratulations! Your application for Master Guardian has been accepted.
+
+
+      Your journey as a member of our dedicated elite PvP unit begins now.
+
+      Please carefully read through all the pinned topics in this forum. This is your new forum to discuss PvP with fellow Master Guardians.
+
+      You also now have access to #master-guardians on Discord.
+
+
+      Thank you for your contributions to PvP so far and we look forward to your development as a Master Guardian.
+
+      All the best!
     textarea: true
   automod_plugin_master_guardian_decline_message:
-    default: ""
+    default: |-
+      This application for Master Guardian has been declined.
+
+      A reason may or may not be provided above.
+
+      The applicant usually cannot see a declined application so we don't always post a reason.
     textarea: true
   automod_plugin_grand_guardian_accept_message:
-    default: ""
+    default: |-
+      Congratulations! Your application for Grand Guardian has been accepted.
+
+
+      Your journey as a member of our esteemed PvM unit begins now.
+
+
+      Thank you for your contributions to PvM so far and we look forward to your development as a Grand Guardian.
+
+      All the best!
     textarea: true
   automod_plugin_grand_guardian_decline_message:
-    default: ""
+    default: |-
+      This application for Grand Guardian has been declined.
+
+      A reason may or may not be provided above.
+
+      The applicant usually cannot see a declined application so we don't always post a reason.
     textarea: true

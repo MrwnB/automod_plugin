@@ -9,7 +9,8 @@ When a staff user clicks either action, the plugin:
 - locks the topic
 
 Admins can customize each category's Accept and Decline reply in the Discourse admin settings under
-`Application Moderation`. Leave a message setting blank to use the built-in default. Markdown is supported.
+`Application Moderation`. The built-in messages are prefilled in the textareas for immediate editing.
+Markdown is supported.
 
 Supported category scope:
 
