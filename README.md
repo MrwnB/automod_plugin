@@ -8,9 +8,11 @@ When a staff user clicks either action, the plugin:
 - posts the matching canned reply for the topic's application category
 - locks the topic
 
+Admins can customize each category's Accept and Decline reply in the Discourse admin settings under
+`Application Moderation`. Leave a message setting blank to use the built-in default. Markdown is supported.
+
 Supported category scope:
 
-- `Applications`
 - `Join Us`
 - `Applications > Graduations`
 - `Applications > Apply For Honoured`

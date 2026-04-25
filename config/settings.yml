@@ -2,3 +2,39 @@ automod_plugin:
   automod_plugin_enabled:
     default: true
     client: true
+  automod_plugin_join_us_accept_message:
+    default: ""
+    textarea: true
+  automod_plugin_join_us_decline_message:
+    default: ""
+    textarea: true
+  automod_plugin_graduations_accept_message:
+    default: ""
+    textarea: true
+  automod_plugin_graduations_decline_message:
+    default: ""
+    textarea: true
+  automod_plugin_honoured_guardian_accept_message:
+    default: ""
+    textarea: true
+  automod_plugin_honoured_guardian_decline_message:
+    default: ""
+    textarea: true
+  automod_plugin_heroic_guardian_accept_message:
+    default: ""
+    textarea: true
+  automod_plugin_heroic_guardian_decline_message:
+    default: ""
+    textarea: true
+  automod_plugin_master_guardian_accept_message:
+    default: ""
+    textarea: true
+  automod_plugin_master_guardian_decline_message:
+    default: ""
+    textarea: true
+  automod_plugin_grand_guardian_accept_message:
+    default: ""
+    textarea: true
+  automod_plugin_grand_guardian_decline_message:
+    default: ""
+    textarea: true

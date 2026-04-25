@@ -255,6 +255,33 @@ module ::AutomodPlugin
       },
     }.freeze
 
+    DECISION_MESSAGE_SETTINGS = {
+      join_application: {
+        accept: :automod_plugin_join_us_accept_message,
+        decline: :automod_plugin_join_us_decline_message,
+      },
+      graduations: {
+        accept: :automod_plugin_graduations_accept_message,
+        decline: :automod_plugin_graduations_decline_message,
+      },
+      honoured_guardian: {
+        accept: :automod_plugin_honoured_guardian_accept_message,
+        decline: :automod_plugin_honoured_guardian_decline_message,
+      },
+      heroic_guardian: {
+        accept: :automod_plugin_heroic_guardian_accept_message,
+        decline: :automod_plugin_heroic_guardian_decline_message,
+      },
+      master_guardian: {
+        accept: :automod_plugin_master_guardian_accept_message,
+        decline: :automod_plugin_master_guardian_decline_message,
+      },
+      grand_guardian: {
+        accept: :automod_plugin_grand_guardian_accept_message,
+        decline: :automod_plugin_grand_guardian_decline_message,
+      },
+    }.freeze
+
     def initialize(topic:, user:)
       @topic = topic
       @user = user
@@ -318,6 +345,11 @@ module ::AutomodPlugin
     end
 
     def message_for(decision_key)
+      custom_message =
+        SiteSetting.public_send(DECISION_MESSAGE_SETTINGS.fetch(category_key).fetch(decision_key))
+
+      return custom_message if custom_message.present?
+
       DECISION_MESSAGES.fetch(category_key).fetch(decision_key)
     end
 

@@ -119,6 +119,88 @@ RSpec.describe AutomodPlugin::ApplicationDecisionsController do
       end
     end
 
+    [
+      {
+        category_name: :join_us_category,
+        decision: :accept,
+        setting_name: :automod_plugin_join_us_accept_message,
+      },
+      {
+        category_name: :join_us_category,
+        decision: :decline,
+        setting_name: :automod_plugin_join_us_decline_message,
+      },
+      {
+        category_name: :graduations_category,
+        decision: :accept,
+        setting_name: :automod_plugin_graduations_accept_message,
+      },
+      {
+        category_name: :graduations_category,
+        decision: :decline,
+        setting_name: :automod_plugin_graduations_decline_message,
+      },
+      {
+        category_name: :honoured_category,
+        decision: :accept,
+        setting_name: :automod_plugin_honoured_guardian_accept_message,
+      },
+      {
+        category_name: :honoured_category,
+        decision: :decline,
+        setting_name: :automod_plugin_honoured_guardian_decline_message,
+      },
+      {
+        category_name: :heroic_category,
+        decision: :accept,
+        setting_name: :automod_plugin_heroic_guardian_accept_message,
+      },
+      {
+        category_name: :heroic_category,
+        decision: :decline,
+        setting_name: :automod_plugin_heroic_guardian_decline_message,
+      },
+      {
+        category_name: :master_category,
+        decision: :accept,
+        setting_name: :automod_plugin_master_guardian_accept_message,
+      },
+      {
+        category_name: :master_category,
+        decision: :decline,
+        setting_name: :automod_plugin_master_guardian_decline_message,
+      },
+      {
+        category_name: :grand_category,
+        decision: :accept,
+        setting_name: :automod_plugin_grand_guardian_accept_message,
+      },
+      {
+        category_name: :grand_category,
+        decision: :decline,
+        setting_name: :automod_plugin_grand_guardian_decline_message,
+      },
+    ].each do |example|
+      it "uses the configured #{example[:decision]} reply for #{example[:category_name]} topics" do
+        expected_message =
+          "Custom #{example[:decision]} reply for #{example[:category_name]}\n\nWith markdown."
+        SiteSetting.public_send("#{example[:setting_name]}=", expected_message)
+        topic =
+          Fabricate(
+            :topic_with_op,
+            title: "Application message override",
+            category: public_send(example[:category_name]),
+          )
+
+        sign_in(admin)
+
+        perform_decision(topic, example[:decision])
+
+        expect(response.status).to eq(200)
+        expect(decision_reply_for(topic).raw).to eq(expected_message)
+      end
+    end
+
     it "rejects unsupported categories" do
       unsupported_category = Fabricate(:category, name: "General")
       topic =
